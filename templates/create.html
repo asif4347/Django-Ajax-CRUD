@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+</style>
+</head>
+<body>
+<form method="post" id="myForm" js-form-url="{% url 'saveContact' %}" onsubmit="ajaxReq()">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div id="loader" hidden>Submitting...</div>
+    <div id="success" hidden>Form submitted successfully</div>
+    <br>
+    <button onclick="ajaxReq()" type="button">Submit</button>
+  </form>
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script>
+    function ajaxReq() {
+
+       var form=$('#myForm')
+        var div=$('#loader')
+        div.show()
+       var data=form.serializeArray()
+        $.ajax({
+            url:form.attr('js-form-url'),
+            data:form.serialize(),
+            dataType: 'json',
+            method: 'post',
+            success:function (data) {
+
+                    console.log(data)
+                    div.html(data.msg)
+                form=form.reset
+
+
+            }
+        })
+        console.log(data)
+    }
+</script>
+
+</body>
+</html>

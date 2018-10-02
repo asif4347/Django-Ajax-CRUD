@@ -4,7 +4,9 @@
 
   <h1 class="page-header">Books</h1>
     <p>
-    <button type="button" class="btn btn-primary js-create-book">
+    <button type="button"
+            data-url="{% url 'book_create' %}"
+            class="btn btn-primary js-create-book">
       <span class="glyphicon glyphicon-plus"></span>
       New book
     </button>

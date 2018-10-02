@@ -5,6 +5,8 @@ from .models import Book
 from django.http import JsonResponse
 from .forms import BookForm
 from django.template.loader import render_to_string
+from rest_framework import viewsets
+from  .serializers import BookSerializer
 
 
 def book_list(request):
@@ -72,3 +74,11 @@ def book_delete(request, pk):
         )
     return JsonResponse(data)
 
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all().order_by('title')
+    serializer_class = BookSerializer
+
+
+def dataTable(request):
+    return render(request,'books/book-datatable.html')

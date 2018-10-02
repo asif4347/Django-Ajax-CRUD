@@ -24,3 +24,7 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title+" by "+self.author
+
+    @classmethod
+    def __all__(cls):
+        return cls._meta.fields
